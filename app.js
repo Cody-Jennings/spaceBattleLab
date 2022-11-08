@@ -7,6 +7,7 @@ class Ship {                                                                    
         this.accuracy = accuracy;
     }
 }
+
 //#endregion
 
 //#region Humans Class
@@ -14,15 +15,17 @@ class HumanShip extends Ship {                                                  
     constructor(hull, firepower, accuracy) {
         super(hull, firepower, accuracy)                                                        // The super keyword is used to access properties on an object literal or class's [[Prototype]], or invoke a superclass's constructor.
     }
+
     attack(deadlyAlien) {                                                                       //deadly alien is placeholder. Attack is the function or method because it is inside class.
         if (this.checkAccuracy(this.accuracy)) {
             deadlyAlien.hull -= this.firepower
-            console.log(`We hit ${deadlyAlien.name}!\n${deadlyAlien.name} has ${deadlyAlien.hull} hull points left.`)
+            console.log(`Player hit ${deadlyAlien.name}!\n${deadlyAlien.name} has ${deadlyAlien.hull} hull points left.`)
         } else {
-            console.log("We missed the aliens! Prepare for another attack!")
+            console.log("Player missed the aliens! Prepare for another attack!")
         }
         return deadlyAlien.hull
     }
+
     checkAccuracy(accuracy) {
         let check = Math.random()
         if (check < accuracy) {
@@ -43,16 +46,18 @@ class AlienShip extends Ship {
         this.firepower = this.randomNumberMaker2();
         this.accuracy = this.randomNumberMaker3();
     }
+
     attack(humanPlayer) {                                                                       //humanPlayer is placeholder
         if (this.checkAccuracy(this.accuracy)) {                                                
             humanPlayer.hull -= this.firepower
-            console.log(`We hit the player ship!\nPlayer ship has ${humanPlayer.hull} hull points left.`)
+            console.log(`Aliens have hit the player ship!\nPlayer ship has ${humanPlayer.hull} hull points left.`)
         } else {
-            console.log("We have missed the humans! Will Smith is just too good of a pilot!")
+            console.log("Aliens have missed the humans! Will Smith is just too good of a pilot!")
         }
         return humanPlayer.hull
     }
-    checkAccuracy(accuracy) {   //
+
+    checkAccuracy(accuracy) {   
         let check = Math.random()
         if (check < accuracy) {
             return true
@@ -76,6 +81,7 @@ class AlienShip extends Ship {
         return z
     }
 }
+
 //#endregion
 
 //#region GameBoard
@@ -118,7 +124,7 @@ class GameBoard {
         return this.arrayOfAliens[this.arrayOfAliens.length - 1]
     }
 
-    makeAliens() {
+    makeAliens() {                                                                             //loops through alien array 6 times
         let alienArray = []
         for (let i = 6; i > 0; i--) {
             alienArray.push(new AlienShip(`Alien Ship #${i}`))  
@@ -129,7 +135,7 @@ class GameBoard {
     isThereAWinner() {    
         let player = this.player 
         let winnerOfGame;
-        while (winnerOfGame != "alien" || enemyArr.length != 0) {                               //while loop 
+        while (winnerOfGame != "alien" || alienArray.length != 0) {                               //while loop 
             let alien = this.pickTarget()
             let winnerOfGame = this.playRound(player, alien)
             if (winnerOfGame == "alien") {
@@ -137,7 +143,6 @@ class GameBoard {
             }
 
             this.arrayOfAliens.pop()                                                             //The pop() method removes the last element from an array and returns that element. This method changes the length of the array. 
-
 
             if (this.arrayOfAliens.length == 0) {
                 return this.gameOver(winnerOfGame)                                               //This mean killed all enemys in array player won
@@ -150,8 +155,6 @@ class GameBoard {
         console.log(`Winner of the game is the ${winnerOfGame}.`)
         return
     }
-
-
 }
 
 let test = new GameBoard()
