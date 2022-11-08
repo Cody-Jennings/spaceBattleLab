@@ -48,7 +48,7 @@ class AlienShip extends Ship {
             humanPlayer.hull -= this.firepower
             console.log(`We hit the player ship!\nPlayer ship has ${humanPlayer.hull} hull points left.`)
         } else {
-            console.log("We have missed the humans! Will Smith is just to good a pilot!")
+            console.log("We have missed the humans! Will Smith is just too good of a pilot!")
         }
         return humanPlayer.hull
     }
