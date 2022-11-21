@@ -96,9 +96,7 @@ class GameBoard {
     }
 
     retreat() {
-        console.log("We are tactfully retreating to ensure maximum alien decimation upon our return!!!!\nYou have chose to regroup and change tactics. Until next time...") 
-            
-        
+        console.log("We are tactfully retreating to ensure maximum alien decimation upon our return!!!!\nYou have chose to regroup and change tactics. Until next time...")  
     }
 
     playRound(player, alien) {                                 //function encompassing the playround  
@@ -130,9 +128,6 @@ class GameBoard {
             alert(`Please try again!`)
         }
     }
-
-
-
 
     engageOrRetreat() {
         const response = prompt(`What is your next course of action Captain?\n\nPress any key besides "r" to Engage Enemy or press "r" to Retreat.`)
@@ -188,7 +183,6 @@ class GameBoard {
         return       
     }
 }
-
 
 let startGameBtn = document.querySelector("#myBtn")
 startGameBtn.addEventListener("click", function(e){
