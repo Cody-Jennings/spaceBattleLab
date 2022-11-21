@@ -134,7 +134,7 @@ class GameBoard {
         if (response.toLowerCase() === "r") {
             console.log("Engage thrusters to max power! We are tactfully retreating for now!!\n\nYou have safely retreated from the battlefield!")
             return true
-        } else if (response.toLowerCase() === "e") {
+        } else {
             return false
         }
     }
