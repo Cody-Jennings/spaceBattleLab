@@ -48,7 +48,7 @@ class AlienShip extends Ship {
     }
 
     attack(humanPlayer) {                                                                       //humanPlayer is placeholder
-        if (this.checkAccuracy(this.accuracy)) {                                                
+        if (this.checkAccuracy(this.accuracy)) {
             humanPlayer.hull -= this.firepower
             console.log(`Aliens have hit the player ship!\nPlayer ship has ${humanPlayer.hull} hull points left.`)
         } else {
@@ -57,7 +57,7 @@ class AlienShip extends Ship {
         return humanPlayer.hull
     }
 
-    checkAccuracy(accuracy) {   
+    checkAccuracy(accuracy) {
         let check = Math.random()
         if (check < accuracy) {
             return true
@@ -70,12 +70,12 @@ class AlienShip extends Ship {
         let z = Math.floor(Math.random() * 4) + 3;
         return z
     }
-    
+
     randomNumberMaker2 = (x, y) => {
         let z = Math.floor(Math.random() * 3) + 2;
         return z
     }
-    
+
     randomNumberMaker3 = (x, y) => {
         let z = Math.floor(Math.random() * 3) + 6 / 10;
         return z
@@ -85,13 +85,23 @@ class AlienShip extends Ship {
 //#endregion
 
 //#region GameBoard
-class GameBoard {                                                                   
+class GameBoard {
     constructor() {
         this.player = new HumanShip(20, 5, .7);
         this.arrayOfAliens = this.makeAliens();
     }
+        
+    displayIntro() {
+        console.log("Earth has been attacked by a horde of aliens! You are the captain of the USS Schwarzenegger, on a mission to destroy every last alien ship. Battle the aliens as you try to destroy them with your lasers. There are six alien ships. The aliens' weakness is that they are too logical and attack one at a time: they will wait to see the outcome of a battle before deploying another alien ship. Your strength is that you have the initiative and get to attack first. However, you do not have targeting lasers and can only attack the aliens in order. After you have destroyed a ship, you have the option to make a hasty retreat.\n\n********* To begin this mission with utmost haste click `Start Game` and follow the on screen prompts ********* ")
+    }
 
-    playRound(player, alien) {                                                                  //function encompassing the playround  
+    retreat() {
+        console.log("We are tactfully retreating to ensure maximum alien decimation upon our return!!!!\nYou have chose to regroup and change tactics. Until next time...") 
+            //this.gameOver()
+        
+    }
+
+    playRound(player, alien) {                                 //function encompassing the playround  
         let winnerOfRound;
         while (true) {
             let playerResult = player.attack(alien)
@@ -109,15 +119,49 @@ class GameBoard {
         }
     }
 
-    retreat(player) {                                                                           //retreat function randomized using number values since only logging out game to the console
-        let retreat = Math.random()
-        if (retreat > .7) {                                                                     // retreat will happen 30% of the time because greater than .7
-            console.log("I am retreating, my hull value will be at max strength for the next round!")
-            player.hull = 20
+
+    // startOrReset() {
+    //     const response = prompt(`What is your next course of action Captain?\n\nEnter "s" to Start Game or "r" to Reset Game.`)
+    //     if (response.toLowerCase() === "s") {
+    //         console.log("You have engaged the enemy!")
+    //     }
+    // }     
+
+    //start or message prompt
+
+    resetGame() {//reset or exit game
+        const response = prompt(`The mission is over. What is your next course of action Captain?\n\nEnter "r" to Reset Game or "q" to Quit Game`)
+        if (response.toLowerCase() === "r") {
+            console.log("Prepare to reengage the enemy!")
+            location.reload()
+        } else if (response.toLowerCase() === "q") {
+            console.log("Will return another time to destroy the aliens!")
         } else {
-            console.log("These colors dont run!")                                               // 70% likely when retreat function runs
+            alert(`Please try again`)
         }
-        return
+    }
+
+
+
+
+    engageOrRetreat() {
+        //let gameOver;
+        //let alienWin = this.alienWin() too much recursion
+        const response = prompt(`What is your next course of action Captain?\n\nEnter "e" to Engage Enemy or "r" to Retreat.`)
+        if (response.toLowerCase() === "r") {
+            console.log("Engage thrusters to max power! We are tactfully retreating for now!!\n\nYou have safely retreated from the battlefield")
+            //let gameOver = winnerOfGame()//gameOver(winnerOfGame)
+            alert("You must change tactics and attack again soon!")
+            //this.alienWin();
+            if(response === this.gameOver("alien"));
+            this.isThereAWinner()
+            //this.resetGame()
+        } else if (response.toLowerCase() === "e") {
+            null
+        } else {
+            alert(`Please try again`) 
+            //this.engageOrRetreat()           
+        }
     }
 
     pickTarget() {                                                                              //function to return last index in alien array
@@ -127,17 +171,25 @@ class GameBoard {
     makeAliens() {                                                                             //loops through alien array 6 times
         let alienArray = []
         for (let i = 6; i > 0; i--) {
-            alienArray.push(new AlienShip(`Alien Ship #${i}`))  
+            alienArray.push(new AlienShip(`Alien Ship #${i}`))
         }
         return alienArray
     }
 
-    isThereAWinner() {    
-        let player = this.player 
+    isThereAWinner() {
+        let player = this.player
         let winnerOfGame;
-        while (winnerOfGame != "alien" || alienArray.length != 0) {                               //while loop 
+        
+        while (winnerOfGame != "alien" || alienArray.length != 0) {         //while loop 
+            let response = this.engageOrRetreat()
             let alien = this.pickTarget()
             let winnerOfGame = this.playRound(player, alien)
+            if(response === "r") {
+                winnerOfGame = "alien"
+                this.gameOver(winnerOfGame)
+                
+            }                            
+            
             if (winnerOfGame == "alien") {
                 return this.gameOver(winnerOfGame)                                              //This means that the alien won the game
             }
@@ -145,19 +197,33 @@ class GameBoard {
             this.arrayOfAliens.pop()                                                             //The pop() method removes the last element from an array and returns that element. This method changes the length of the array. 
 
             if (this.arrayOfAliens.length == 0) {
-                return this.gameOver(winnerOfGame)                                               //This mean killed all enemys in array player won
-            }
-
-            this.retreat(player)                                                                 //Calling the retreat function
+                return this.gameOver(winnerOfGame)                                               //This means killed all enemys in array player won
+            } 
         }
     }
+
     gameOver(winnerOfGame) {                                                                     // function that logs the winner of the game message using template literals
         console.log(`Winner of the game is the ${winnerOfGame}.`)
-        return
+        return       
     }
 }
 
+
 let test = new GameBoard()
+test.displayIntro()
 test.isThereAWinner()
+test.resetGame()
+// test.displayIntro()
+// test.isThereAWinner()
+// test.resetGame()
+
+//fix retreat function so no more 
+
+//start game button needs event listener function to start game with action prompt for player  
+
+
+//can clicking cancleq in alert option yield a desired resulte
+
+//reset game if have time
 
 //#endregion

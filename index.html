@@ -5,13 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="app.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="./style.css" type="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="instructions">Please go to console to begin defending earth and see game functions in action!
+        <button id="myBtn">Start Game</button>
+    <script>
+        document.getElementById("myBtn").addEventListener("click", function() {
+          alert("Let the defense of earth commence. Please open console before selecting `OK`.");
+        });
+        </script></div>
+    
     <div class="bodyContainer">
 
         <div class="mainCharacterView left" >
