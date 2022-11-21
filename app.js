@@ -119,7 +119,7 @@ class GameBoard {
         }
     }
 
-    resetGame() {//reset or exit game
+    resetGame() {                                                                           //reset or exit game
         const response = prompt(`The mission is over. What is your next course of action Captain?\n\nEnter "r" to Reset Game or "q" to Quit Game`)
         if (response.toLowerCase() === "r") {
             console.log("Prepare to reengage the enemy!")
@@ -160,7 +160,7 @@ class GameBoard {
         let player = this.player
         let winnerOfGame;
         
-        while (winnerOfGame != "alien" || alienArray.length != 0) {         //while loop 
+        while (winnerOfGame != "alien" || alienArray.length != 0) {                      //while loop for round play 
             let response = this.engageOrRetreat()
             let alien = this.pickTarget()
             
@@ -197,22 +197,5 @@ test.displayIntro()
 test.isThereAWinner()
 test.resetGame()
 })
-
-
-
-
-
-// test.displayIntro()
-// test.isThereAWinner()
-// test.resetGame()
-
-//fix retreat function so no more 
-
-//start game button needs event listener function to start game with action prompt for player  
-
-
-//can clicking cancleq in alert option yield a desired resulte
-
-//reset game if have time
 
 //#endregion
